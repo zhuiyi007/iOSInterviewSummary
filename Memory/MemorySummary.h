@@ -104,7 +104,7 @@ date        ->      [NSDate date]       ->      0x9b1f126e6987ee65      ->  tagg
  */
 
 
-#pragma mark - iOS内存管理 ⚠️需要再看一遍⚠️
+#pragma mark - iOS内存管理
 
 /**
  1. 引用计数器的存储
@@ -130,6 +130,7 @@ date        ->      [NSDate date]       ->      0x9b1f126e6987ee65      ->  tagg
                             - static void weak_compact_maybe(weak_table_t *weak_table)
                             .......
  
+ 3. weak指针的原理
     - struct SideTable {
         spinlock_t slock;
         RefcountMap refcnts;

@@ -29,6 +29,7 @@
 		5219B39B25D2719000D268DB /* CompositeBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5219B39A25D2719000D268DB /* CompositeBox.m */; };
 		5219B3A425D271A100D268DB /* CompositeProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 5219B3A325D271A100D268DB /* CompositeProduct.m */; };
 		5219B3A925D274AA00D268DB /* CompositeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5219B3A825D274AA00D268DB /* CompositeTests.m */; };
+		5226A2AB26986E040009D847 /* SummaryPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226A2AA26986E040009D847 /* SummaryPerson.m */; };
 		522D61B6261412C00000B16D /* ThreadLockNSConditionLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D61B5261412C00000B16D /* ThreadLockNSConditionLock.m */; };
 		522D61BC261414830000B16D /* ThreadLockSerialQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D61BB261414830000B16D /* ThreadLockSerialQueue.m */; };
 		522D61C226143C0B0000B16D /* ThreadLockSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D61C126143C0B0000B16D /* ThreadLockSemaphore.m */; };
@@ -200,6 +201,8 @@
 		5219B3A225D271A100D268DB /* CompositeProduct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompositeProduct.h; sourceTree = "<group>"; };
 		5219B3A325D271A100D268DB /* CompositeProduct.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompositeProduct.m; sourceTree = "<group>"; };
 		5219B3A825D274AA00D268DB /* CompositeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompositeTests.m; sourceTree = "<group>"; };
+		5226A2A926986E040009D847 /* SummaryPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SummaryPerson.h; sourceTree = "<group>"; };
+		5226A2AA26986E040009D847 /* SummaryPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SummaryPerson.m; sourceTree = "<group>"; };
 		522D61B4261412C00000B16D /* ThreadLockNSConditionLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadLockNSConditionLock.h; sourceTree = "<group>"; };
 		522D61B5261412C00000B16D /* ThreadLockNSConditionLock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadLockNSConditionLock.m; sourceTree = "<group>"; };
 		522D61BA261414830000B16D /* ThreadLockSerialQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadLockSerialQueue.h; sourceTree = "<group>"; };
@@ -760,6 +763,8 @@
 				5245974F261DC5EF00E7B03E /* Interview.h */,
 				521193DA262704CE00A68BE3 /* SummaryViewController.h */,
 				521193DB262704CE00A68BE3 /* SummaryViewController.m */,
+				5226A2A926986E040009D847 /* SummaryPerson.h */,
+				5226A2AA26986E040009D847 /* SummaryPerson.m */,
 			);
 			path = Summary;
 			sourceTree = "<group>";
@@ -1216,6 +1221,7 @@
 				5219B07425D12A5900D268DB /* RemoteController.m in Sources */,
 				5249321A26004B070005949B /* KVOViewController.m in Sources */,
 				52326F9E25C2AF1200CA2CCC /* Shape.m in Sources */,
+				5226A2AB26986E040009D847 /* SummaryPerson.m in Sources */,
 				522D675F261567460000B16D /* ThreadLockBarrier.m in Sources */,
 				52D5BEA125EF99690020F6BA /* FacadeMP4Decode.m in Sources */,
 				52326F7C25C296FB00CA2CCC /* CarBuilder.m in Sources */,

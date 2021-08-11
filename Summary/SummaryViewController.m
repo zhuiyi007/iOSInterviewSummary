@@ -6,6 +6,7 @@
 //
 
 #import "SummaryViewController.h"
+#import "SummaryPerson.h"
 
 @interface SummaryViewController ()
 
@@ -15,18 +16,32 @@
 
 @implementation SummaryViewController
 
+- (void)test {
+    NSLog(@"2");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture)];
-//
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [button setFrame:CGRectMake(100, 100, 100, 100)];
-//    [button setBackgroundColor:[UIColor blackColor]];
-//    [button addGestureRecognizer:recognizer];
-//    [button addTarget:self action:@selector(targetAction) forControlEvents:UIControlEventTouchUpInside];
-//
-//    [self.view addSubview:button];
+    
+    NSThread *thread = [[NSThread alloc] initWithBlock:^{
+        NSLog(@"1");
+    }];
+    // performSelector跟runloop有关,子线程默认不开启runloop
+    [self performSelector:@selector(test) onThread:thread withObject:nil waitUntilDone:NO];
+    
+    [thread start];
+    
+    
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture)];
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(100, 100, 100, 100)];
+    [button setBackgroundColor:[UIColor blackColor]];
+    [button addGestureRecognizer:recognizer];
+    [button addTarget:self action:@selector(targetAction) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view addSubview:button];
     
 //    self.text = [[UITextView alloc] initWithFrame:CGRectMake(200, 200, 200, 40)];
 //    [self.text setBackgroundColor:[UIColor redColor]];
@@ -35,8 +50,23 @@
 //    UIButton *textButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [textButton setFrame:CGRectMake(100, 100, 100, 100)];
 //    [textButton setBackgroundColor:[UIColor blackColor]];
-//    [textButton addTarget:self action:@selector(gaotuInterview:) forControlEvents:UIControlEventTouchUpInside];
+//    [textButton addTarget:self action:@selector(targetAction) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:textButton];
+    
+//    SummaryPerson *p1 = [[SummaryPerson alloc] init];
+//    p1.personId = @"1";
+//    p1.name = @"111";
+//
+//    SummaryPerson *p2 = [[SummaryPerson alloc] init];
+//    p2.personId = @"2";
+//    p2.name = @"222";
+//
+//    SummaryPerson *p3 = [[SummaryPerson alloc] init];
+//    p3.personId = @"3";
+//    p3.name = @"333";
+//
+//    NSDictionary *dic = @{p1 : @"1", p2 : @"2", p3 : @"3"};
+//    NSLog(@"%@", dic);
 }
 
 - (void)targetAction {
