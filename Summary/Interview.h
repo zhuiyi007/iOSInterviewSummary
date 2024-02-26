@@ -27,6 +27,18 @@
     - 一个NSObject对象占用多少内存？
         - 一个NSObject对象中只有一个isa指针,占用8字节(class_getInstanceSize)
         - 但是在arm64架构下,内存会进行16字节对齐,因此一个NSObject对象占用16字节(malloc_size)
+        - class_getInstanceSize返回的是结构体内存对齐后的占用字节数,对齐规则为结构体中最大内存结构的字节倍数
+        - malloc_size返回的是iOS系统对齐后的占用字节数,对齐规则为16的倍数
+        - 例如:
+            struct Student_IMPL {
+                Class isa;      // 8字节
+                int _no;        // 4字节
+                int _age;       // 4字节
+                int _height;    // 4字节
+            }
+            未对齐时,占用字节为20字节
+            class_getInstanceSize方法会进行8字节对齐,最终返回24字节
+            malloc_size方法会进行16字节对齐,最终返回32字节
  
 2. KVO
     - iOS用什么方式实现对一个对象的KVO？(KVO的本质是什么？)
