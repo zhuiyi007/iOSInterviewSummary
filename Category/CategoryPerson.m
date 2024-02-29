@@ -9,7 +9,7 @@
 
 @implementation CategoryPerson
 - (void)run {
-    NSLog(@"run");
+    NSLog(@"CategoryPerson - run");
 }
 + (void)test {
     NSLog(@"CategoryPerson - Test");

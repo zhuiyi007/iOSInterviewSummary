@@ -65,9 +65,9 @@ void printMethodOfClass(Class cls) {
     
     // 重点方法:void attachLists(List* const * addedLists, uint32_t addedCount)
     
-//    CategoryPerson *person = [[CategoryPerson alloc] init];
-//    [person run];
-//    [person test];
+    CategoryPerson *person = [[CategoryPerson alloc] init];
+    [person run];
+    [person test];
     
     
 #pragma mark - +load / +initlized
@@ -83,14 +83,23 @@ void printMethodOfClass(Class cls) {
     
 //    void load_images(const char *path __unused, const struct mach_header *mh)
 //    void prepare_load_methods(const headerType *mhdr)
+    
+        // objc4-906源码,类的列表是从这个方法中获取的
+        // classref_t const *classlist = getSectionData<classref_t>(mhdr, info, _dyld_section_location_data_non_lazy_class_list, &count);
+    
+        // objc4-723源码,类的列表是从这个方法中获取的
         // classref_t const *classlist = _getObjc2NonlazyClassList(mhdr, &count);
     // schedule_class_load方法中有个递归,会优先把父类的cls先加载
+        // Ensure superclass-first ordering
         // schedule_class_load(cls->getSuperclass());
     // 因此父类的load方法优先加载
     // 没有继承关系的类之间,load方法加载顺序跟编译顺序有关
 //    void add_class_to_loadable_list(Class cls)
     // 再加载分类的load方法
 //    void add_category_to_loadable_list(Category cat)
+        // objc4-906源码,分类列表是从这个方法中获取的
+        // category_t * const *categorylist = getSectionData<category_t *>(mhdr, info, _dyld_section_location_data_non_lazy_category_list, &count);
+        // objc4-723源码,分类列表是从这个方法中获取的
         // category_t * const *categorylist = _getObjc2NonlazyCategoryList(mhdr, &count);
     // 分类之间的load方法加载顺序只跟编译顺序有关
     
@@ -126,9 +135,12 @@ void printMethodOfClass(Class cls) {
 //    call_category_loads();
     
 //    CategoryPerson - load, test, load, test, load, test,
-//    printMethodOfClass(object_getClass([person class]));
+    printMethodOfClass(object_getClass([person class]));
+    /// 如果是自己手动调用+ load方法,则会遵循objc_msgSend(),走消息转发机制
+    /// 只会调用最后编译的分类中的+ load方法
+    [CategoryPerson load];
     // 其他方法是通过objc_msgsend方法调用,就会被分类覆盖
-//    [CategoryPerson test];
+    [CategoryPerson test];
     
 #pragma mark - initialize方法
     /**
@@ -138,8 +150,15 @@ void printMethodOfClass(Class cls) {
         CategoryStudent+initialize2 - initialize
      分类中的调用顺序参考objc_msgsend
      
+     objc4-906initialized方法调用顺序
      调用方法时会通过isa查找方法列表:
      Method class_getInstanceMethod(Class cls, SEL sel)
+     // 类方法内部是通过改变参数(传MetaClass)获取调用上面的方法
+        Method class_getClassMethod(Class cls, SEL sel)
+        {
+            if (!cls  ||  !sel) return nil;
+            return class_getInstanceMethod(cls->getMeta(), sel);
+        }
      IMP lookUpImpOrForward(id inst, SEL sel, Class cls, int behavior)
      static Class realizeAndInitializeIfNeeded_locked(id inst, Class cls, bool initialize)
      static Class initializeAndLeaveLocked(Class cls, id obj, mutex_t& lock)
@@ -156,11 +175,13 @@ void printMethodOfClass(Class cls) {
     /**
      - 调用方式的区别
      initialize是通过objc_msgSend调用的:
-        如果子类没有实现initialize,会调用父类的initialize,因此,当子类没有实现initialize方法时,父类的initialize会调用多次,但其实每个类只会初始化一次
+        如果子类没有实现initialize,会调用父类的initialize,因此,当子类没有实现initialize方法时,父类的initialize会调用多次(其实是子类触发的initialize方法调用,最终调用到了父类的initialize方法),但其实每个类只会初始化一次
             if (自己没有初始化) {
                 if (父类没有初始化) {
                     objc_msgSend([Person class], @selector(initialize));
                 }
+                // 此处如果Student没有实现initialize方法,那么就会调用[Person initialize]方法
+                // 因此从打印来看,会调用两次[Person initialize]方法
                 objc_msgSend([Student class], @selector(initialize));
             }
      load是通过查找IMP指针直接调用的方式
@@ -174,15 +195,5 @@ void printMethodOfClass(Class cls) {
      initialize先初始化父类,再初始化子类(可能调用的是父类的initialize)
      */
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
