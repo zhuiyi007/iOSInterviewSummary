@@ -71,6 +71,7 @@
 //    p (IMP)0x7fff207bc2b7
 //    (IMP) $1 = 0x00007fff207bc2b7 (Foundation`_NSSetIntValueAndNotify)
 //    (IMP) $0 = 0x00007fff207bc039 (Foundation`_NSSetDoubleValueAndNotify)
+//    po [self.person1 methodForSelector:@selector(setAge:)] (Foundation`_NSSetDoubleValueAndNotify)
     NSLog(@"%p", [self.person1 methodForSelector:@selector(setAge:)]);
     
 //    NSKVONotifying_KVOPerson - setAge:, class, dealloc, _isKVOA,
@@ -82,7 +83,7 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     // (Class) $0 = 0x000060000292c2d0 NSKVONotifying_KVOPerson
-//    self.person1.age = 111;
+    self.person1.age = 111;
     
     // (__unsafe_unretained Class) $1 = 0x0000000100a5b1e8 KVOPerson
 //    self.person2.age = 222;
